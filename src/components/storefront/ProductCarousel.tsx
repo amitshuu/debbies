@@ -11,18 +11,20 @@ type PlaceholderProduct = {
 
 // PLACEHOLDER — replace with real products fetched from DB
 const PLACEHOLDER_PRODUCTS: PlaceholderProduct[] = [
-  { id: 1, name: "Placeholder Bag 1", price: 350 },
-  { id: 2, name: "Placeholder Bag 2", price: 420 },
-  { id: 3, name: "Placeholder Bag 3", price: 290 },
-  { id: 4, name: "Placeholder Bag 4", price: 510 },
-  { id: 5, name: "Placeholder Bag 5", price: 380 },
-  { id: 6, name: "Placeholder Bag 6", price: 460 },
+  { id: 1, name: "תיק לדוגמה 1", price: 350 },
+  { id: 2, name: "תיק לדוגמה 2", price: 420 },
+  { id: 3, name: "תיק לדוגמה 3", price: 290 },
+  { id: 4, name: "תיק לדוגמה 4", price: 510 },
+  { id: 5, name: "תיק לדוגמה 5", price: 380 },
+  { id: 6, name: "תיק לדוגמה 6", price: 460 },
 ];
 
 export function ProductCarousel() {
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  function scrollLeft() {
+  // In RTL, ← (ChevronLeft) is the "forward/next" direction, so it scrolls toward the end (negative x).
+  // scrollBy left values work in physical pixel space regardless of dir; RTL flex lays items right→left.
+  function scrollTowardEnd() {
     if (!scrollRef.current) return;
     scrollRef.current.scrollBy({
       left: -(scrollRef.current.offsetWidth * 0.75),
@@ -30,7 +32,7 @@ export function ProductCarousel() {
     });
   }
 
-  function scrollRight() {
+  function scrollTowardStart() {
     if (!scrollRef.current) return;
     scrollRef.current.scrollBy({
       left: scrollRef.current.offsetWidth * 0.75,
@@ -42,30 +44,33 @@ export function ProductCarousel() {
     <section className="py-12 md:py-24">
       <div className="px-6 md:px-12 max-w-[1440px] mx-auto">
         <div className="flex items-end justify-between mb-8 md:mb-12">
-          <h2 className="font-serif text-[28px] md:text-[36px] leading-[1.2] text-ink">
-            OUR COLLECTION
+          <h2 className="font-display font-semibold text-[30px] md:text-[40px] leading-[1.2] text-ink">
+            הקולקציה שלנו
           </h2>
           <div className="hidden md:flex gap-2">
+            {/* ChevronRight = ← visual direction in RTL layout = scroll toward start (first items) */}
             <button
-              onClick={scrollLeft}
-              aria-label="Scroll left"
-              className="w-10 h-10 flex items-center justify-center border border-border text-ink hover:border-leather hover:text-leather transition-colors duration-200"
-            >
-              <ChevronLeft size={18} strokeWidth={1.5} />
-            </button>
-            <button
-              onClick={scrollRight}
-              aria-label="Scroll right"
+              onClick={scrollTowardStart}
+              aria-label="פריטים קודמים"
               className="w-10 h-10 flex items-center justify-center border border-border text-ink hover:border-leather hover:text-leather transition-colors duration-200"
             >
               <ChevronRight size={18} strokeWidth={1.5} />
+            </button>
+            {/* ChevronLeft = → visual direction in RTL layout = scroll toward end (later items) */}
+            <button
+              onClick={scrollTowardEnd}
+              aria-label="פריטים הבאים"
+              className="w-10 h-10 flex items-center justify-center border border-border text-ink hover:border-leather hover:text-leather transition-colors duration-200"
+            >
+              <ChevronLeft size={18} strokeWidth={1.5} />
             </button>
           </div>
         </div>
       </div>
 
-      {/* Left-padded scroll container — intentionally bleeds past max-width on the right */}
-      <div className="pl-6 md:pl-12">
+      {/* Start-padded scroll container (ps- = padding-inline-start = right in RTL).
+          First card sits at the right edge after padding; carousel bleeds past max-width on the left. */}
+      <div className="ps-6 md:ps-12">
         <div
           ref={scrollRef}
           className="flex gap-4 md:gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide"
@@ -77,22 +82,23 @@ export function ProductCarousel() {
             >
               {/* PLACEHOLDER image — replace with real product photo */}
               <div className="aspect-[3/4] bg-border flex items-center justify-center hover:bg-border/80 transition-colors duration-300">
-                <span className="text-ink-soft text-[12px] font-medium tracking-[0.08em] uppercase">
-                  Product image
+                <span className="font-sans font-light text-ink-soft text-[12px]">
+                  תמונת מוצר
                 </span>
               </div>
               <div className="pt-4 pb-2">
-                <p className="font-sans font-medium text-ink text-[15px] leading-snug">
+                <p className="font-sans font-light text-ink text-[15px] leading-snug">
                   {name}
                 </p>
+                {/* Price numerals stay LTR per Unicode bidi — browser handles this automatically */}
                 {/* PLACEHOLDER price — real prices come from DB in agorot, convert to ₪ */}
-                <p className="font-sans text-leather text-[14px] mt-1">
+                <p className="font-sans font-light text-leather text-[14px] mt-1">
                   ₪{price}
                 </p>
               </div>
             </div>
           ))}
-          {/* Spacer so last card clears the right edge */}
+          {/* Spacer so last card clears the left (end) edge */}
           <div className="flex-none w-6 md:w-12" aria-hidden="true" />
         </div>
       </div>

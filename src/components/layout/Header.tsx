@@ -4,15 +4,16 @@ import { useState } from "react";
 import Image from "next/image";
 import { Menu, X, ShoppingBag, User } from "lucide-react";
 
-const leftNavLinks = [
-  { label: "SHOP", href: "#" },
-  { label: "ABOUT", href: "#" },
+const startNavLinks = [
+  { label: "חנות", href: "#" },
+  { label: "אודות", href: "#" },
 ];
 
-const rightNavLinks = [{ label: "CONTACT", href: "#" }];
+const endNavLinks = [{ label: "צור קשר", href: "#" }];
 
+// No tracking for Hebrew nav text — wide letter-spacing breaks Hebrew readability
 const navLinkClass =
-  "text-[13px] font-medium tracking-[0.12em] text-ink hover:text-leather transition-colors duration-200";
+  "font-sans font-light text-[15px] text-ink hover:text-leather transition-colors duration-200";
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -20,18 +21,18 @@ export function Header() {
   return (
     <header className="bg-cream relative z-40">
       <div className="max-w-[1440px] mx-auto px-6 md:px-12 py-6 md:py-8 flex items-center">
-        {/* Left nav — desktop only */}
+        {/* Start-side nav (right in RTL) — desktop only */}
         <nav className="hidden md:flex items-center gap-10 flex-1">
-          {leftNavLinks.map(({ label, href }) => (
+          {startNavLinks.map(({ label, href }) => (
             <a key={label} href={href} className={navLinkClass}>
               {label}
             </a>
           ))}
         </nav>
 
-        {/* Logo — centered on all breakpoints */}
+        {/* Logo — centered on all breakpoints; dir="ltr" keeps the Latin wordmark left-to-right */}
         <div className="flex-1 md:flex-none flex justify-center">
-          <a href="/" aria-label="Debbies home">
+          <a href="/" aria-label="Debbies home" dir="ltr" className="font-logo">
             <Image
               src="/logo-transparent.svg"
               alt="Debbies"
@@ -42,24 +43,24 @@ export function Header() {
           </a>
         </div>
 
-        {/* Right: nav + icons (desktop) | hamburger (mobile) */}
+        {/* End-side: nav + icons (desktop) | hamburger (mobile) */}
         <div className="flex-1 flex items-center justify-end gap-8">
           <nav className="hidden md:flex items-center gap-8">
-            {rightNavLinks.map(({ label, href }) => (
+            {endNavLinks.map(({ label, href }) => (
               <a key={label} href={href} className={navLinkClass}>
                 {label}
               </a>
             ))}
           </nav>
           <div className="hidden md:flex items-center gap-5">
-            <a href="#" aria-label="Account">
+            <a href="#" aria-label="חשבון">
               <User
                 size={20}
                 strokeWidth={1.5}
                 className="text-ink hover:text-leather transition-colors duration-200"
               />
             </a>
-            <a href="#" aria-label="Cart">
+            <a href="#" aria-label="עגלת קנייה">
               <ShoppingBag
                 size={20}
                 strokeWidth={1.5}
@@ -70,21 +71,22 @@ export function Header() {
           <button
             className="md:hidden text-ink"
             onClick={() => setMenuOpen(true)}
-            aria-label="Open menu"
+            aria-label="פתח תפריט"
           >
             <Menu size={24} strokeWidth={1.5} />
           </button>
         </div>
       </div>
 
-      {/* Mobile full-screen overlay — slides in from right */}
+      {/* Mobile full-screen overlay — slides in from the end (left) edge in RTL */}
       <div
         className={`fixed inset-0 bg-cream z-50 flex flex-col px-6 py-6 transition-transform duration-300 ease-in-out ${
-          menuOpen ? "translate-x-0" : "translate-x-full pointer-events-none"
+          menuOpen ? "translate-x-0" : "-translate-x-full pointer-events-none"
         }`}
       >
         <div className="flex items-center justify-between">
-          <a href="/" aria-label="Debbies home">
+          {/* dir="ltr" keeps the DEBBIES wordmark reading left-to-right inside the RTL overlay */}
+          <a href="/" aria-label="Debbies home" dir="ltr" className="font-logo">
             <Image
               src="/logo-transparent.svg"
               alt="Debbies"
@@ -94,14 +96,14 @@ export function Header() {
           </a>
           <button
             onClick={() => setMenuOpen(false)}
-            aria-label="Close menu"
+            aria-label="סגור תפריט"
             className="text-ink"
           >
             <X size={24} strokeWidth={1.5} />
           </button>
         </div>
         <nav className="flex flex-col items-center justify-center flex-1 gap-10">
-          {[...leftNavLinks, ...rightNavLinks].map(({ label, href }) => (
+          {[...startNavLinks, ...endNavLinks].map(({ label, href }) => (
             <a
               key={label}
               href={href}
@@ -112,10 +114,10 @@ export function Header() {
             </a>
           ))}
           <div className="flex gap-6 mt-4">
-            <a href="#" aria-label="Account" className="text-ink">
+            <a href="#" aria-label="חשבון" className="text-ink">
               <User size={20} strokeWidth={1.5} />
             </a>
-            <a href="#" aria-label="Cart" className="text-ink">
+            <a href="#" aria-label="עגלת קנייה" className="text-ink">
               <ShoppingBag size={20} strokeWidth={1.5} />
             </a>
           </div>

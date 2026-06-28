@@ -1,5 +1,5 @@
-const navLinks = ["Shop", "About", "Contact", "Custom Clutch"];
-const shopLinks = ["Ready-made Bags", "Custom Bags", "New Arrivals", "Gift Cards"];
+const navLinks = ["חנות", "אודות", "צור קשר", "קלאץ׳ מותאם אישית"];
+const shopLinks = ["תיקים מוכנים", "תיקים מותאמים אישית", "חדש בחנות", "כרטיסי מתנה"];
 
 function InstagramIcon() {
   return (
@@ -64,32 +64,36 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
           {/* Column 1: Brand + social */}
           <div className="flex flex-col gap-5">
-            <p className="font-serif text-[22px] text-cream leading-snug">
-              Debbies
+            {/* DEBBIES stays English/LTR; font-logo applies Futurism; dir="ltr" keeps letter order */}
+            <p
+              className="font-logo font-bold text-[22px] text-cream leading-snug"
+              dir="ltr"
+            >
+              DEBBIES
             </p>
             {/* PLACEHOLDER — replace with real tagline */}
-            <p className="text-[13px] text-espresso-soft leading-[1.7]">
-              Handmade bags, made just for you.
+            <p className="font-sans font-light text-[13px] text-espresso-soft leading-[1.7]">
+              תיקים עשויים ביד, מותאמים אישית בשבילך.
             </p>
             <div className="flex gap-5 mt-1">
               {/* PLACEHOLDER links — replace with real social URLs */}
               <a
                 href="#"
-                aria-label="Instagram"
+                aria-label="אינסטגרם"
                 className="text-espresso-soft hover:text-cream transition-colors duration-200"
               >
                 <InstagramIcon />
               </a>
               <a
                 href="#"
-                aria-label="Facebook"
+                aria-label="פייסבוק"
                 className="text-espresso-soft hover:text-cream transition-colors duration-200"
               >
                 <FacebookIcon />
               </a>
               <a
                 href="#"
-                aria-label="WhatsApp"
+                aria-label="וואטסאפ"
                 className="text-espresso-soft hover:text-cream transition-colors duration-200"
               >
                 <WhatsAppIcon />
@@ -99,14 +103,15 @@ export function Footer() {
 
           {/* Column 2: Navigation */}
           <div className="flex flex-col gap-4">
-            <p className="text-[13px] font-medium tracking-[0.12em] uppercase text-cream mb-1">
-              Navigate
+            {/* No tracking on Hebrew column headings — wide letter-spacing breaks Hebrew readability */}
+            <p className="font-display font-semibold text-[13px] text-cream mb-1">
+              ניווט
             </p>
             {navLinks.map((label) => (
               <a
                 key={label}
                 href="#"
-                className="text-[14px] text-espresso-soft hover:text-cream transition-colors duration-200 leading-relaxed"
+                className="font-sans font-light text-[14px] text-espresso-soft hover:text-cream transition-colors duration-200 leading-relaxed"
               >
                 {label}
               </a>
@@ -115,14 +120,14 @@ export function Footer() {
 
           {/* Column 3: Shop */}
           <div className="flex flex-col gap-4">
-            <p className="text-[13px] font-medium tracking-[0.12em] uppercase text-cream mb-1">
-              Shop
+            <p className="font-display font-semibold text-[13px] text-cream mb-1">
+              קנייה
             </p>
             {shopLinks.map((label) => (
               <a
                 key={label}
                 href="#"
-                className="text-[14px] text-espresso-soft hover:text-cream transition-colors duration-200 leading-relaxed"
+                className="font-sans font-light text-[14px] text-espresso-soft hover:text-cream transition-colors duration-200 leading-relaxed"
               >
                 {label}
               </a>
@@ -131,8 +136,8 @@ export function Footer() {
         </div>
 
         <div className="mt-12 md:mt-16 pt-8 border-t border-espresso-soft/30">
-          <p className="text-[13px] text-espresso-soft">
-            © Debbies {new Date().getFullYear()}. All rights reserved.
+          <p className="font-sans font-light text-[13px] text-espresso-soft">
+            © Debbies {new Date().getFullYear()}. כל הזכויות שמורות.
           </p>
         </div>
       </div>

@@ -14,53 +14,47 @@ export function Hero() {
 
           {/* Text column */}
           <div className="flex flex-col gap-8 md:gap-10">
-            <h1 className="font-serif text-[36px] md:text-[56px] leading-[1.1] text-ink">
-              {"C"}
-              <span className="italic">R</span>
-              {"A"}
-              <span className="italic">F</span>
-              {"TED & P"}
-              <span className="italic">E</span>
-              {"RS"}
-              <span className="italic">O</span>
-              {"NAL"}
+            {/* Plain upright — no italic mix, per RTL_AND_LOCALIZATION.md §5 */}
+            <h1 className="font-display font-semibold text-[40px] md:text-[60px] leading-[1.1] text-ink">
+              מעוצב בידיים, נוצר בשבילך
             </h1>
             {/* PLACEHOLDER — replace with real brand copy */}
-            <p className="text-base text-ink-soft leading-[1.7] max-w-sm">
-              Every bag tells your story. Handmade with care, each piece is
-              crafted to be as unique as the person carrying it.
+            <p className="font-sans font-light text-base text-ink-soft leading-[1.7] max-w-sm">
+              כל תיק מספר סיפור. מעוצב ביד ומותאם אישית — כי מה שנושאים אותנו
+              צריך להיות ייחודי בדיוק כמונו.
             </p>
+            {/* Arrow points left (←) — RTL "forward" direction */}
             <a
               href="#"
-              className="self-start border border-ink text-[13px] font-medium tracking-[0.08em] uppercase px-7 py-3 text-ink hover:bg-ink hover:text-cream transition-colors duration-300"
+              className="self-start border border-ink text-[13px] font-sans font-light uppercase px-7 py-3 text-ink hover:bg-ink hover:text-cream transition-colors duration-300"
             >
-              EXPLORE →
+              ← גלו עוד
             </a>
           </div>
 
-          {/* Image column — main image offset left to leave room for the badge */}
+          {/* Image column — main image offset toward start (right in RTL) to leave room for badge */}
           <div className="relative">
             {/* Main hero image — PLACEHOLDER: replace with Debbie's real product photo */}
             <div className="relative aspect-[4/5] md:w-[86%] overflow-hidden">
               <Image
                 src={HERO_IMAGE_URL}
                 fill
-                alt="Handmade leather bag on neutral background"
+                alt="תיק עור עשוי ביד על רקע נייטרלי"
                 className="object-cover"
                 priority
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
 
-            {/* Badge image — desktop only, overlapping bottom-right of main image.
-                The asymmetric overlap is intentional per DESIGN_SYSTEM.md — do not remove on desktop. */}
+            {/* Badge image — desktop only, overlapping the end (left in RTL) corner of the main image.
+                end-0 maps to left:0 in RTL, placing the badge in the 14% gap left of the 86%-wide main image. */}
             {/* PLACEHOLDER: replace with Debbie's real close-up product shot */}
-            <div className="hidden md:block absolute bottom-[10%] right-0 w-[36%] bg-cream p-3">
+            <div className="hidden md:block absolute bottom-[10%] end-0 w-[36%] bg-cream p-3">
               <div className="relative aspect-square">
                 <Image
                   src={BADGE_IMAGE_URL}
                   fill
-                  alt="Bag detail close-up"
+                  alt="תקריב של פרטי התיק"
                   className="object-cover"
                   sizes="20vw"
                 />

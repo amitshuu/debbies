@@ -1,5 +1,50 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Futurism";
+  src: url("/fonts/Futurism-Light.woff2") format("woff2"),
+       url("/fonts/Futurism-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futurism";
+  src: url("/fonts/Futurism-Bold.woff2") format("woff2"),
+       url("/fonts/Futurism-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Yael";
+  src: url("/fonts/OHYaelLeibushor2.0-Regular.woff2") format("woff2"),
+       url("/fonts/OHYaelLeibushor2.0-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Discovery";
+  src: url("/fonts/Discovery_Fs-Light.woff2") format("woff2"),
+       url("/fonts/Discovery_Fs-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Discovery";
+  src: url("/fonts/Discovery_Fs-Demibold.woff2") format("woff2"),
+       url("/fonts/Discovery_Fs-Demibold.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
   --color-cream: #FAF8F5;
   --color-ink: #1A1A1A;
@@ -10,8 +55,14 @@
   --color-espresso-soft: #6B5F58;
   --color-border: #E5E0D8;
 
-  --font-serif: var(--font-cormorant);
-  --font-sans: var(--font-inter);
+  /* Logo font: Futurism (HaFontia, local files) — DEBBIES wordmark only */
+  --font-logo: "Futurism", serif;
+  /* Heading font: Discovery Demibold (weight 600) — h1/h2/h3-level text */
+  --font-display: "Discovery", sans-serif;
+  /* Body/UI font: Discovery Light (weight 300) — body, nav, footer links, copyright */
+  --font-sans: "Discovery", sans-serif;
+  /* Retained but currently unapplied — Yael @font-face kept in place */
+  --font-serif: "Yael", serif;
 }
 
 .scrollbar-hide {

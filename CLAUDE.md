@@ -1,5 +1,3 @@
-@AGENTS.md
-
 # CLAUDE.md
 
 This file is read automatically by Claude Code at the start of every session. It is the entry point — read the referenced docs below before making architectural decisions, and treat them as binding unless the user explicitly says otherwise in the current conversation.
@@ -15,7 +13,8 @@ Debbies — e-commerce site for handmade custom bags. Full context: `docs/PROJEC
 3. `docs/ARCHITECTURE.md` — folder structure, naming, component rules
 4. `docs/DATABASE.md` — schema, must stay category-flexible for future clothing line
 5. `docs/SECURITY.md` — non-negotiable security rules, especially server-side price calculation
-6. `docs/DESIGN_SYSTEM.md` — colors, fonts, spacing (created once design references are provided)
+6. `docs/DESIGN_SYSTEM.md` — colors, fonts, spacing
+7. `docs/PROGRESS.md` — what's been built so far, what's in progress, what's not started yet. Read this first to know where the project actually stands before assuming anything is or isn't built.
 
 ## How To Work On This Project
 
@@ -26,6 +25,7 @@ Debbies — e-commerce site for handmade custom bags. Full context: `docs/PROJEC
 - Mobile-first responsive on every single page and component — verify at 375px width mentally before considering anything done.
 - Prefer Server Components and Server Actions over client-side fetching, per `ARCHITECTURE.md`.
 - After implementing a feature, briefly state which docs/conventions it followed and flag anything where a judgment call was made.
+- **Update `docs/PROGRESS.md` after finishing any feature** — move it from "Not Started"/"In Progress" to "Done" with a one-line description of what was actually built, add any new placeholders to the placeholder list, and log any judgment call made. This is not optional — it's how the next session (today or months from now) knows where things stand.
 
 ## Current Phase
 
