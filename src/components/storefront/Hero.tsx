@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { StitchLine } from "@/components/ui/StitchLine";
 
 // PLACEHOLDER — swap both URLs for Debbie's real product photography
 const HERO_IMAGE_URL =
@@ -14,8 +15,15 @@ export function Hero() {
 
           {/* Text column */}
           <div className="flex flex-col gap-8 md:gap-10">
+            {/* Eyebrow + signature stitch — the one animated moment on the page */}
+            <div className="flex flex-col gap-3">
+              <p className="font-sans font-light text-[13px] text-ink-soft">
+                עשוי ביד · תפירה בעבודת יד
+              </p>
+              <StitchLine animated className="w-28 text-leather" />
+            </div>
             {/* Plain upright — no italic mix, per RTL_AND_LOCALIZATION.md §5 */}
-            <h1 className="font-display font-semibold text-[40px] md:text-[60px] leading-[1.1] text-ink">
+            <h1 className="font-display font-semibold text-[46px] md:text-[64px] lg:text-[88px] leading-[1.05] text-ink">
               מעוצב בידיים, נוצר בשבילך
             </h1>
             {/* PLACEHOLDER — replace with real brand copy */}

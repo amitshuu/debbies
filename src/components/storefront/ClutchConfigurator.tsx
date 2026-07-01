@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { StitchLine } from "@/components/ui/StitchLine";
 
 // ---------------------------------------------------------------------------
 // Label overlay — calibrated constants, do not recalculate.
@@ -36,7 +37,8 @@ export function ClutchConfigurator() {
   const selected = LINING_OPTIONS.find((o) => o.name === selectedName) ?? DEFAULT_OPTION;
 
   return (
-    <section className="py-12 md:py-24 px-6 md:px-12 border-t border-border">
+    <section className="py-12 md:py-24 px-6 md:px-12">
+      <StitchLine className="text-border mb-12 md:mb-16" />
       <div className="max-w-[1440px] mx-auto w-full">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
 
@@ -87,26 +89,66 @@ export function ClutchConfigurator() {
 
           {/* Controls */}
           <div className="flex flex-col gap-8">
-            <h2 className="font-display font-semibold text-[30px] md:text-[40px] leading-[1.2] text-ink">
-              קלאץ׳ בהתאמה אישית
-            </h2>
+            <div className="flex flex-col gap-3">
+              <p className="font-sans font-light text-[13px] text-ink-soft">
+                התאמה אישית
+              </p>
+              <h2 className="font-display font-semibold text-[30px] md:text-[40px] leading-[1.2] text-ink">
+                קלאץ׳ בהתאמה אישית
+              </h2>
+            </div>
             <p className="font-sans font-light text-base text-ink-soft leading-[1.7]">
               בחרי את בטנת הקלאץ׳ שמדברת אלייך. כל שילוב הוא פריט אחד במינו —
               עשוי ביד, בשבילך.
             </p>
 
-            <div className="flex flex-col gap-3">
-              <label
-                htmlFor="lining-option"
-                className="font-sans font-light text-[13px] text-ink-soft"
-              >
+            <div className="flex flex-col gap-4">
+              <span className="font-sans font-light text-[13px] text-ink-soft">
+                צבע בטנה
+              </span>
+
+              {/* Swatches — visual chooser layered on top of the select below.
+                  Same selectedName state, same LINING_OPTIONS/imageUrl availability logic. */}
+              <div className="flex flex-wrap gap-3">
+                {LINING_OPTIONS.map((option) => {
+                  const isActive = option.name === selectedName;
+                  const isAvailable = Boolean(option.imageUrl);
+                  return (
+                    <button
+                      key={option.name}
+                      type="button"
+                      disabled={!isAvailable}
+                      aria-pressed={isActive}
+                      aria-label={option.name}
+                      onClick={() => setSelectedName(option.name)}
+                      className={`relative w-9 h-9 rounded-full border transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-leather ${
+                        isActive ? "border-leather" : "border-border"
+                      } ${
+                        isAvailable
+                          ? "cursor-pointer hover:border-leather"
+                          : "cursor-not-allowed opacity-30"
+                      }`}
+                      style={{ backgroundColor: option.swatchColor }}
+                    >
+                      {isActive && (
+                        <span
+                          aria-hidden="true"
+                          className="absolute -inset-1 rounded-full border border-leather"
+                        />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <label htmlFor="lining-option" className="sr-only">
                 צבע בטנה
               </label>
               <select
                 id="lining-option"
                 value={selectedName}
                 onChange={(e) => setSelectedName(e.target.value)}
-                className="border border-border bg-cream text-ink font-sans font-light text-base px-4 py-3 focus:outline-none focus:border-ink cursor-pointer appearance-none"
+                className="border border-border bg-cream text-ink font-sans font-light text-base px-4 py-3 focus:outline-none focus:ring-1 focus:ring-ink focus:border-ink hover:border-leather transition-colors duration-200 cursor-pointer appearance-none"
                 style={{ direction: "rtl" }}
               >
                 {LINING_OPTIONS.map((option) => (

@@ -27,32 +27,38 @@ Usage rules:
 
 ## Typography
 
-Two typefaces only, mirroring the reference: an editorial serif for headlines, a spaced-out sans for everything functional.
+**Superseded from the original brief below**: this section originally specified Cormorant Garamond + Inter (Latin-only fonts). The site is Hebrew-only (see `RTL_AND_LOCALIZATION.md`), and the type system actually in use is Discovery (two weights) + Futurism for the logo. This section reflects what's actually built — treat it as current, not the Cormorant/Inter text that used to be here.
+
+Three font roles:
 
 ```
-Headline font: "Cormorant Garamond" (Google Fonts) — serif, used at large sizes (32px+)
-Body / UI font: "Inter" (Google Fonts) — sans, used for nav, buttons, body copy, labels
+Logo font:      "Futurism" (HaFontia, local files in public/fonts/) — DEBBIES wordmark only, Latin, dir="ltr"
+Headline font:  "Discovery" Demibold (weight 600) — h1/h2/h3-level text, eyebrows excluded
+Body / UI font: "Discovery" Light (weight 300) — body, nav, buttons, captions, eyebrows
 ```
 
-### The mixed-case headline effect
+Both Discovery weights are registered under one `font-family: "Discovery"` in `globals.css`, selected via `font-weight` (`font-semibold` → 600 Demibold, `font-light` → 300 Light). Tailwind tokens: `font-display` (headline role) and `font-sans` (body/UI role) both resolve to `"Discovery"` — the weight utility is what actually switches the visual face.
 
-The reference's signature move: within one headline, some letters are upright serif and some are italic serif, applied irregularly (not every-other-letter — looks intentional, almost hand-set). This is achieved by wrapping individual letters in `<span>` with `italic` applied to specific ones.
+No mixed italic/upright headline treatment — Hebrew has no italic typesetting tradition, so headlines are always plain upright Discovery Demibold (see `RTL_AND_LOCALIZATION.md` §5).
 
-This is a deliberate per-instance design decision, not a reusable utility class — apply it directly when building a specific headline (e.g. the homepage Hero "LUXURY & PRECISION" treatment), not as a global rule for every heading on the site. Most headlines elsewhere on the site can be plain upright `Cormorant Garamond` — reserve the mixed italic treatment for 1-2 hero-level moments per page, or it stops feeling special.
+### The eyebrow role
+
+A small label (13px, Discovery Light, `ink-soft`) placed above a headline to add editorial weight without a new typeface or letter-spacing tricks — e.g. "עשוי ביד · תפירה בעבודת יד" above the Hero h1, "התאמה אישית" above the clutch configurator h2. Reserve for section-opening headlines, not every heading.
 
 ### Scale
 
 ```
-h1 (hero)       : 56px / mobile 36px,  Cormorant Garamond, regular weight, line-height 1.1
-h2 (section)     : 36px / mobile 28px,  Cormorant Garamond, regular weight, line-height 1.2
-h3 (card title)  : 22px,                Cormorant Garamond, regular weight
-nav / labels      : 13px,                Inter, weight 500, letter-spacing 0.12em, uppercase
-body              : 16px,                Inter, weight 400, line-height 1.7
-small / caption   : 13px,                Inter, weight 400, color ink-soft
-button text       : 13px,                Inter, weight 500, letter-spacing 0.08em, uppercase
+h1 (hero)       : 46px mobile / 64px tablet (md) / 88px desktop (lg), Discovery Demibold (600), line-height 1.05
+h2 (section)     : 30px mobile / 40px desktop,                        Discovery Demibold (600), line-height 1.2
+h3 (card title)  : 22px,                                               Discovery Demibold (600)
+eyebrow           : 13px,                                               Discovery Light (300), color ink-soft
+nav / labels      : 15px,                                               Discovery Light (300), no letter-spacing (Hebrew — see RTL doc §5)
+body              : 16px,                                               Discovery Light (300), line-height 1.7
+small / caption   : 12–13px,                                            Discovery Light (300), color ink-soft
+button text       : 13px,                                               Discovery Light (300), uppercase (Latin CTAs only)
 ```
 
-Letter-spacing on uppercase nav/button text is essential to the look — don't skip it. Tailwind: `tracking-wider` or a custom `tracking-[0.12em]`.
+Do not apply `tracking-wider` / wide letter-spacing to Hebrew text — it breaks Hebrew readability (see `RTL_AND_LOCALIZATION.md` §5). Reserve wide tracking for any future Latin-only UI text, if it ever appears.
 
 ## Spacing & Layout
 
@@ -89,13 +95,21 @@ Reserve a filled/solid button style only for the final checkout/purchase action 
 ## Product Cards
 
 - No heavy borders or shadows — separation via whitespace and a hairline `border` color only.
-- Product image first, name in body/Inter weight 500, price below in `leather` or `ink`.
+- Product image first, name in body/Discovery Light, price below in `leather` or `ink`.
 - Hover: subtle, e.g. image slightly scales (`scale-105`) or a second product image crossfades in — nothing bouncy or playful, this is a quiet, confident hover.
 
 ## Imagery Style
 
 - Black & white or desaturated/muted product and lifestyle photography is the reference's dominant mode, with the actual product (leather bags) supplying the only saturated color on the page.
 - Once real photography from the seamstress is available, this principle should guide editing: keep backgrounds and lifestyle shots neutral/desaturated so the product itself remains the visual focus.
+
+## Signature Element — The Stitch
+
+A recurring hand-stitch motif (`components/ui/StitchLine.tsx`): an irregular dashed, gently undulating SVG line — deliberately not a perfect CSS `dashed` border, which reads as generic/machine-made rather than hand-stitched.
+
+Two uses only, kept strictly separate:
+- **Animated, once, hero-only**: `<StitchLine animated />` under the Hero eyebrow, in `leather`. Draws itself in on load (`stroke`/`clip-path` reveal, right-to-left to match Hebrew reading direction) via the `stitch-line-animated` class in `globals.css`. Respects `prefers-reduced-motion` (shows fully, no animation). This is the one bold/animated moment on the page — do not add the animated variant anywhere else, or it stops being special.
+- **Static, quiet, reused as a divider**: plain `<StitchLine />` in `border` color, replacing plain hairline `border-t`/`border-b` section dividers (currently: above `ProductCarousel`'s scroll strip, above `ClutchConfigurator`). No animation, no leather — it's texture, not an accent.
 
 ## What To Avoid
 
