@@ -20,6 +20,7 @@ const LABEL_ROTATION = -0.15; // radians (≈−8.6°)
 // in the dropdown with "(בקרוב)" until their PNG is generated and added.
 const LINING_OPTIONS = [
   { name: "זברה",       swatchColor: "#C8C8C8", imageUrl: "/images/clutch/lining-zebra.png" },
+  { name: "אריות",     swatchColor: "#7E7760", imageUrl: "/images/clutch/lining-lion.png" },
   { name: "שנהב",      swatchColor: "#F5F0E0", imageUrl: null },
   { name: "ורוד אבק",  swatchColor: "#D4A5A0", imageUrl: null },
   { name: "כחול נייבי", swatchColor: "#1C2B4A", imageUrl: null },
