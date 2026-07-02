@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { Menu, X, ShoppingBag, User } from "lucide-react";
+import { Logo } from "@/components/ui/Logo";
 
 const startNavLinks = [
   { label: "חנות", href: "#" },
@@ -32,14 +32,8 @@ export function Header() {
 
         {/* Logo — centered on all breakpoints; dir="ltr" keeps the Latin wordmark left-to-right */}
         <div className="flex-1 md:flex-none flex justify-center">
-          <a href="/" aria-label="Debbies home" dir="ltr" className="font-logo">
-            <Image
-              src="/logo-transparent.svg"
-              alt="Debbies"
-              width={198}
-              height={35}
-              priority
-            />
+          <a href="/" aria-label="Debbies home" dir="ltr">
+            <Logo width={164} height={35} priority />
           </a>
         </div>
 
@@ -86,13 +80,8 @@ export function Header() {
       >
         <div className="flex items-center justify-between">
           {/* dir="ltr" keeps the DEBBIES wordmark reading left-to-right inside the RTL overlay */}
-          <a href="/" aria-label="Debbies home" dir="ltr" className="font-logo">
-            <Image
-              src="/logo-transparent.svg"
-              alt="Debbies"
-              width={198}
-              height={35}
-            />
+          <a href="/" aria-label="Debbies home" dir="ltr">
+            <Logo width={164} height={35} />
           </a>
           <button
             onClick={() => setMenuOpen(false)}
